@@ -14,8 +14,15 @@ class Formula:
         self.args = args
 
     def pnk(self):
-        """sequence of permutations wordlist on domain name"""
-        log.debug(list(itertools.permutations(self.produce_wordlist())))
+        """Sequence of permutations wordlist on domain name"""
+        log.debug("Permutation...")
+        perms = itertools.permutations(itertools.chain(self.produce_wordlist(), self.produce_subdomains()), len(list(self.produce_subdomains())))
+        for x in perms:
+            print(x, flush=True)
+            print(".".join(x), flush=True)
+        log.debug("Done!")
+
+        
 
     def produce_wordlist(self):
         """Read the wordlist and returns lines generator"""
@@ -26,14 +33,35 @@ class Formula:
 
     def produce_subdomains(self):
         """Extract the subdomains from the input"""
-        
+        url = urlparse(self.args.domain)
+        log.debug(url)
+        log.debug(url.hostname)
+        log.debug(url.netloc)
+        log.debug(url.geturl())
+        log.debug(url.path)
+        host = url.hostname or url.geturl()
+        log.debug(f"{host=}")
+
+        # TODO: remove starting `www` and handle `co.uk`-like hostnames
+        subdomains = host.split('.')[:-2]
+        log.debug(len(subdomains))
+        log.debug(subdomains)
+        if subdomains:
+            for sub in subdomains:
+                yield sub
+        else:
+            sys.stderr.write(f"No subdomains found for {host}")
+            sys.stderr.flush()
+            sys.exit(1)
+
+
 
 def setup_argparse():
     """Read arguments from cli"""
     parser = argparse.ArgumentParser(
         description="Set CLI args pnk works with")
     parser.add_argument(
-        '-d', '--domain', help='domain to get subdomains permutations for'
+        '-d', '--domain', help='hostname to get subdomains permutations for'
     )
     parser.add_argument('-w', '--wordlist', help='wordlist file')
     args = parser.parse_args()
@@ -47,7 +75,7 @@ def main(args):
     """Entry point for the programm"""
     if args.wordlist:
         log.debug(f"{args.wordlist}")
-    if args.domain is None:
+    if args.domain:
         log.debug(f"{args.domain}")
 
     frml = Formula(args)
