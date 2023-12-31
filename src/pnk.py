@@ -12,17 +12,26 @@ log = logger.get_logger()
 class Formula:
     def __init__(self, args) -> None:
         self.args = args
+        self.host = self.get_host()
+        self.subdomains = self.get_subdomains()
+
+    def get_host(self):
+        url = urlparse(self.args.domain)
+        host = url.hostname or url.geturl()
+        log.debug(f"{host=}")
+        return host
 
     def pnk(self):
         """Sequence of permutations wordlist on domain name"""
         log.debug("Permutation...")
-        perms = itertools.permutations(itertools.chain(self.produce_wordlist(), self.produce_subdomains()), len(list(self.produce_subdomains())))
-        for x in perms:
-            print(x, flush=True)
-            print(".".join(x), flush=True)
-        log.debug("Done!")
+        combined_words = itertools.chain(self.produce_wordlist(), self.subdomains)
+        perms = itertools.permutations(combined_words, len(list(self.subdomains)))
+        for p in perms:
+            print(p, flush=True)
+            print(".".join(p), flush=True)
+            # print(".".join(p) + "." + self.args.domain, flush=True)
 
-        
+        log.debug("Done!")
 
     def produce_wordlist(self):
         """Read the wordlist and returns lines generator"""
@@ -31,26 +40,16 @@ class Formula:
             for line in file:
                 yield line.strip()
 
-    def produce_subdomains(self):
+    def get_subdomains(self):
         """Extract the subdomains from the input"""
-        url = urlparse(self.args.domain)
-        log.debug(url)
-        log.debug(url.hostname)
-        log.debug(url.netloc)
-        log.debug(url.geturl())
-        log.debug(url.path)
-        host = url.hostname or url.geturl()
-        log.debug(f"{host=}")
-
         # TODO: remove starting `www` and handle `co.uk`-like hostnames
-        subdomains = host.split('.')[:-2]
+        subdomains = self.host.split('.')[:-2]
         log.debug(len(subdomains))
         log.debug(subdomains)
         if subdomains:
-            for sub in subdomains:
-                yield sub
+            return subdomains
         else:
-            sys.stderr.write(f"No subdomains found for {host}")
+            sys.stderr.write(f"No subdomains found for {self.host}")
             sys.stderr.flush()
             sys.exit(1)
 
