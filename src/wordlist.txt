@@ -1,0 +1,3 @@
+test
+stage
+area
