@@ -2,9 +2,10 @@ import sys
 import argparse
 import itertools
 import pathlib
-from helpers import logger
-from urllib.parse import urlparse
+import re
 
+from urllib.parse import urlparse
+from helpers import logger
 
 log = logger.get_logger()
 
@@ -12,24 +13,35 @@ log = logger.get_logger()
 class Formula:
     def __init__(self, args) -> None:
         self.args = args
-        self.host = self.get_host()
-        self.subdomains = self.get_subdomains()
+        self.host, self.domain, self.subdomains = self.parse_hostname()
 
-    def get_host(self):
+    def parse_hostname(self):
+        """Extract a domain and subdomains from the input"""
         url = urlparse(self.args.domain)
         host = url.hostname or url.geturl()
+        _domain = re.search(r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io)$", host)
+        _subdomains = host[:_domain.start()] + host[_domain.end():]
+        if not _subdomains:
+            sys.stderr.write(f"No subdomains found for {host}")
+            sys.stderr.flush()
+            sys.exit(1)
+
+        domain = _domain.group(0)
+        subdomains = _subdomains.split('.')[:-1]
         log.debug(f"{host=}")
-        return host
+        log.debug(f"{domain=}")
+        log.debug(f"{subdomains=}")
+        
+        return host, domain, subdomains
 
     def pnk(self):
         """Sequence of permutations wordlist on domain name"""
         log.debug("Permutation...")
-        combined_words = itertools.chain(self.produce_wordlist(), self.subdomains)
-        perms = itertools.permutations(combined_words, len(list(self.subdomains)))
+        perms = itertools.permutations(self.subdomains, len(self.subdomains))
         for p in perms:
             print(p, flush=True)
-            print(".".join(p), flush=True)
-            # print(".".join(p) + "." + self.args.domain, flush=True)
+            s = ".".join(p)
+            print(s + "." + self.domain, flush=True)
 
         log.debug("Done!")
 
@@ -39,20 +51,6 @@ class Formula:
         with open(wordlist, 'r', encoding='UTF-8') as file:
             for line in file:
                 yield line.strip()
-
-    def get_subdomains(self):
-        """Extract the subdomains from the input"""
-        # TODO: remove starting `www` and handle `co.uk`-like hostnames
-        subdomains = self.host.split('.')[:-2]
-        log.debug(len(subdomains))
-        log.debug(subdomains)
-        if subdomains:
-            return subdomains
-        else:
-            sys.stderr.write(f"No subdomains found for {self.host}")
-            sys.stderr.flush()
-            sys.exit(1)
-
 
 
 def setup_argparse():
