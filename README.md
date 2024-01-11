@@ -1,5 +1,6 @@
 # pnk
-Комбинация доменов и слов на основе размещений без повторений P(n,k)
+[EN] Produce a combination of subdomains without repetitions - generates permutations P(n,k)
+[RU] Комбинация доменов и слов на основе размещений без повторений P(n,k)
 
 # Make it work
 - [ ] replace each subs with each word: test.domain.com -> demo.domain.com
@@ -21,7 +22,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -i, --increment       additionally increment any \d{2} digits on subdomains
+  -i, --increment       additionally increment digits on subdomains
   -w WORDLIST, --wordlist WORDLIST
                         wordlist file to mixed with subdomains
 ```
@@ -30,7 +31,7 @@ $ cat subs1.txt subs2.txt | ./pnk.py
 ```
 
 # Make it fast
-WIP. But, to turn this single process script into multiprocessing use [interlace](https://github.com/codingo/Interlace)
+WIP: but, to turn this single process script into multiprocess use [interlace](https://github.com/codingo/Interlace)
 
 
 ## Examples
@@ -65,7 +66,7 @@ aws3.s03.env2.tesla.com
 ```
 
 ## Limitations
-Works unexpectedly:
+Unexpectedly works with incremet option in the following cases:
 ```bash
 v5-5.test.io -> v0-0.test.io .. v9-9.test.io
 5io5.33.ya.ru -> 0io0.33.ya.ru .. 5io5.09.ya.ru
