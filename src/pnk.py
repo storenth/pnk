@@ -94,7 +94,7 @@ def setup_argparse():
     parser = argparse.ArgumentParser(
         description="Set CLI args pnk works with")
     # optional argument
-    parser.add_argument('-i', '--increment', action='store_true', help='additionally increment any \d{2} digits on subdomains')
+    parser.add_argument('-i', '--increment', action='store_true', help='additionally increment any one or two digits on subdomains')
     parser.add_argument('-w', '--wordlist', help='wordlist file to mixed with subdomains')  # TODO: implement then use with multiprocessing only
     # positional argument
     parser.add_argument(
