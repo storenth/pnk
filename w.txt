@@ -1,15 +1,16 @@
+a1.env2.tesla.com
+aws1.v00v.zone.com
 a1-env.demo.com
 sub.test.ru
 ;
 test.ru
-aws1.v00v.verizon.com
 
-https://www.aws1.dropbox.com/
+https://www.aws1.drop.com/
 www.1do.do.co
 rus.777.vat.co.uk
-a1.env2.amazon.com
 e2e.vv2v.verizon.com
 s13.m5.r71.mail.ru
 s5-5.do4s.razer.com
 5io5.33.ya.ru
 777v.host.ai
+99v.host-us.ai
