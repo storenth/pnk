@@ -34,9 +34,9 @@ WIP. But, to turn this single process script into multiprocessing use [interlace
 
 
 ## Limitations
-No:
+Works unexpectedly:
 ```bash
-v5-5.test.io --> v0-0.test.io
-5io5.33.ya.ru -> 0io0.33.ya.ru
+v5-5.test.io -> v0-0.test.io .. v9-9.test.io
+5io5.33.ya.ru -> 0io0.33.ya.ru .. 5io5.09.ya.ru
 777v.host.ai -> 777v.host.ai
 ```
