@@ -1,6 +1,5 @@
 # pnk
-[EN] Produce a combination of subdomains without repetitions - generates permutations P(n,k)
-[RU] Комбинация доменов и слов на основе размещений без повторений P(n,k)
+Produce a combination of subdomains without repetitions - generates permutations P(n,k)
 
 # Make it work
 - [ ] replace each subs with each word: test.domain.com -> demo.domain.com
