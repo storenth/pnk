@@ -44,24 +44,17 @@ class Formula:
         for p in itertools.permutations(subdomains):
             yield p
 
-    def incrmt(self, subdomains):
-        """Increment a digit found in subdomains.
-
-        Yes:
-            v1.subs1.subdomain -> v2.subs1.subdomain
-            v1.subs1.subdomain -> v1.subs2.subdomain
-        No:
-            v1.subs01.subdomain -> v2.subs02.subdomain
-            aws77.subs009.subdomain -> aws1.subs1.subdomain
-            v001.subdomain01 -> v002.subdomain01
-        """
+    def incrmt(self, subdomain):
+        """Increment a digit found in subdomain"""
         log.debug("Increment digits...")
-        subdomains_string = ".".join(subdomains)
-        is_matched = re.search('(?<!\d)\d(?!\d)', subdomains_string)  # TODO: v001.subdomain01 -> v002.subdomain01 ...
-        if is_matched:
+        pattern = re.compile('(?<!\d)\d{1,2}(?!\d)')
+        match = pattern.search(subdomain)
+        log.debug(match)
+        if match:
             for i in range(10):
-                _s = subdomains_string.replace(
-                    subdomains_string[is_matched.start(): is_matched.end()], str(i)
+                _s = subdomain.replace(
+                    subdomain[match.start(): match.end()],
+                    str(i).zfill(len(subdomain[match.start(): match.end()])),
                 )
                 log.debug(_s)
                 yield _s
@@ -77,13 +70,16 @@ class Formula:
                     pass  # ignore not hostname and lack of subdomains cases
                 else:
                     if self.args.increment:
-                        for i in self.incrmt(s):
-                            print(i)
-                            print(i + "." + d)
+                        _s = s.copy()
+                        for index, j in enumerate(s):
+                            for i in self.incrmt(j):
+                                _s[index] = i
+                                log.debug(_s)
+                                print(".".join(_s) + "." + d)
+                            _s[index] = j
                     for p in self.pnk(s):
-                        print(p)
-                        s = ".".join(p)
-                        print(s + "." + d)
+                        log.debug(p)
+                        print(".".join(p) + "." + d)
 
     def produce_wordlist(self):
         """Read the wordlist and returns lines generator"""
