@@ -66,8 +66,13 @@ aws3.s03.env2.tesla.com
 
 ## Limitations
 Unexpectedly works with incremet option in the following cases:
-```bash
-v5-5.test.io -> v0-0.test.io .. v9-9.test.io
-5io5.33.ya.ru -> 0io0.33.ya.ru .. 5io5.09.ya.ru
+```
+5io5.33.ya.ru -> 1io5.33.ya.ru .. 5io5.99.ya.ru
 777v.host.ai -> 777v.host.ai
 ```
+## TODO
+1. Combinations of incrementations (cartesian product): 
+```
+5io5.33.ya.ru -> 0io0.00.ya.ru .. 9io9.99.ya.ru
+```
+2. Package
