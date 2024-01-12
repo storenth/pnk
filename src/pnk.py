@@ -51,7 +51,7 @@ class Formula:
         match = pattern.search(subdomain)
         log.debug(match)
         if match:
-            for i in range(10):
+            for i in range(10 if int(match.group()) < 10 else 100):
                 _s = subdomain.replace(
                     subdomain[match.start(): match.end()],
                     str(i).zfill(len(subdomain[match.start(): match.end()])),
@@ -74,11 +74,9 @@ class Formula:
                         for index, j in enumerate(s):
                             for i in self.incrmt(j):
                                 _s[index] = i
-                                log.debug(_s)
                                 print(".".join(_s) + "." + d)
                             _s[index] = j
                     for p in self.pnk(s):
-                        log.debug(p)
                         print(".".join(p) + "." + d)
 
     def produce_wordlist(self):
