@@ -48,16 +48,29 @@ class Formula:
         """Increment a digit found in subdomain"""
         log.debug("Increment digits...")
         pattern = re.compile('(?<!\d)\d{1,2}(?!\d)')
-        match = pattern.search(subdomain)
-        log.debug(match)
-        if match:
-            for i in range(10 if int(match.group()) < 10 else 100):
-                _s = subdomain.replace(
-                    subdomain[match.start(): match.end()],
-                    str(i).zfill(len(subdomain[match.start(): match.end()])),
-                )
-                log.debug(_s)
-                yield _s
+        matches = pattern.finditer(subdomain)
+        for match in matches:
+            log.debug(match)
+            if match:
+                for i in range(10 if len(match.group()) < 2 else 100):
+                    _s = (
+                        subdomain[:match.start()]
+                        + str(i).zfill(len(subdomain[match.start(): match.end()]))
+                        + subdomain[match.end():]
+                    )
+                    log.debug(_s)
+                    yield _s
+                # check for duplicated digits to increment it both
+                if match.group() in subdomain[:match.start()]:
+                    log.debug("duplicated digits")
+                    log.debug(match)
+                    for i in range(10 if len(match.group()) < 2 else 100):
+                        _s = subdomain.replace(
+                            subdomain[match.start(): match.end()],
+                            str(i).zfill(len(subdomain[match.start(): match.end()])),
+                        )
+                        log.debug(_s)
+                        yield _s
 
     def run(self):
         """Compose functions on files with hostname lines"""
