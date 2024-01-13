@@ -39,7 +39,7 @@ class Formula:
             raise TypeError(f"No host found for {host}")
 
     def pnk(self, subdomains):
-        """Sequence of permutations wordlist on domain name"""
+        """Sequence of permutations on subdomains"""
         log.debug("Permutation...")
         for p in itertools.permutations(subdomains):
             yield p
@@ -93,7 +93,9 @@ class Formula:
                         print(".".join(p) + "." + d)
 
     def produce_wordlist(self):
-        """Read the wordlist and returns lines generator"""
+        """TODO: see https://github.com/storenth/pnk/issues/1
+        Read the wordlist and returns lines generator
+        """
         wordlist = self.args.wordlist if self.args.wordlist else pathlib.Path(__file__).parent / 'wordlist.txt'
         with open(wordlist, 'r', encoding='UTF-8') as file:
             for line in file:
@@ -106,7 +108,6 @@ def setup_argparse():
         description="Set CLI args pnk works with")
     # optional argument
     parser.add_argument('-i', '--increment', action='store_true', help='additionally increment any one or two digits on subdomains')
-    parser.add_argument('-w', '--wordlist', help='wordlist file to mixed with subdomains')  # TODO: implement then use with multiprocessing only
     # positional argument
     parser.add_argument(
         'file',
@@ -125,10 +126,7 @@ def setup_argparse():
 
 def main(args):
     """Entry point for the programm"""
-    if args.wordlist:
-        log.debug(f"{args.wordlist}")
-
-    frml = Formula(args, args.file, args.wordlist)
+    frml = Formula(args, args.file)
     frml.run()
 
 if __name__ == '__main__':
