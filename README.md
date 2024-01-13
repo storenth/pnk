@@ -2,9 +2,7 @@
 Produce a combination of subdomains without repetitions - generates permutations P(n,k)
 
 # Make it work
-- [ ] replace each subs with each word: test.domain.com -> demo.domain.com
 - [x] swap subs themselves: web.test.domain.com -> test.web.domain.com
-- [ ] insert word by creating new subs: test.domain.com -> demo.test.domain.com, test.demo.domain.com
 - [x] increase/decrease subs with numbers: test1.domain.com -> test2.domain.com
 
 # Make it right
@@ -22,15 +20,13 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -i, --increment       additionally increment digits on subdomains
-  -w WORDLIST, --wordlist WORDLIST
-                        wordlist file to mixed with subdomains
 ```
 ```bash
 $ cat subs1.txt subs2.txt | ./pnk.py
 ```
 
 # Make it fast
-WIP: but, to turn this single process script into multiprocess use [interlace](https://github.com/codingo/Interlace)
+WIP: but for now, to turn this single process script into multiprocess use [interlace](https://github.com/codingo/Interlace)
 
 
 ## Examples
@@ -64,11 +60,16 @@ aws3.s03.env2.tesla.com
 ...
 ```
 
-## Limitations
-Unexpectedly works with incremet option in the following cases:
+## Constraints
+### Feature request
+See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) for the following feature requests:
+- [ ] replace each subs with word in wordlist: v2.test.domain.com -> demo.test.domain.com
+- [ ] prepend/append word by creating new subs: test.domain.com -> demo.test.domain.com, test.demo.domain.com
+### Limitations
+Unexpectedly works with incremet option in the following cases: more then two digits:
 ```
-5io5.33.ya.ru -> 1io5.33.ya.ru .. 5io5.99.ya.ru
-777v.host.ai -> 777v.host.ai
+v123.tesla.com -> v123.tesla.com
+aws.777v.amazon.com -> aws.777v.amazon.com
 ```
 ## TODO
 1. Combinations of incrementations (cartesian product): 
