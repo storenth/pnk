@@ -1,13 +1,11 @@
 #!/usr/bin/python3
-import sys
-import argparse
 import itertools
 import functools
 import pathlib
 import re
 
 from urllib.parse import urlparse
-from helpers import logger
+from pnk.helpers import logger
 
 log = logger.get_logger()
 functools.partial(print, flush=True)
@@ -100,35 +98,3 @@ class Formula:
         with open(wordlist, 'r', encoding='UTF-8') as file:
             for line in file:
                 yield line.strip()
-
-
-def setup_argparse():
-    """Read arguments from cli"""
-    parser = argparse.ArgumentParser(
-        description="Set CLI args pnk works with")
-    # optional argument
-    parser.add_argument('-i', '--increment', action='store_true', help='additionally increment any one or two digits on subdomains')
-    # positional argument
-    parser.add_argument(
-        'file',
-        nargs='*',
-        type=argparse.FileType('r', encoding='UTF-8'),
-        default=[sys.stdin],
-        metavar='FILE',
-        help='list of subdomains/hosts to process',
-    )
-    args = parser.parse_args()
-    if not args.file:
-        parser.print_help(sys.stderr)
-        parser.exit(1)
-    return args
-
-
-def main(args):
-    """Entry point for the programm"""
-    frml = Formula(args, args.file)
-    frml.run()
-
-if __name__ == '__main__':
-    args = setup_argparse()
-    main(args)

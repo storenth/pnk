@@ -1,0 +1,7 @@
+alpha
+beta
+test
+stage
+preprod
+prod
+area
