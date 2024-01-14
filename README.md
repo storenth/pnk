@@ -1,5 +1,5 @@
 # pnk
-Produce a combination of subdomains without repetitions - generates permutations P(n,k)
+Produce a combination of subdomains - generates permutations P(n,k).
 
 ## Make it work
 - [x] swap subs themselves: web.test.domain.com -> test.web.domain.com
