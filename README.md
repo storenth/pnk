@@ -77,3 +77,5 @@ aws.777v.amazon.com -> aws.777v.amazon.com
 5io5.33.ya.ru -> 0io0.00.ya.ru .. 9io9.99.ya.ru
 ```
 2. Package
+PyPi-test ready
+![test.pypi](misc/test-pypi.png)
