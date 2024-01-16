@@ -24,7 +24,9 @@ class Formula:
         log.debug(f"{host=}")
         if host:
             _domain = re.search(r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io)$", host)
-            log.debug(f"{_domain=}")
+            log.debug(f"No domain found for {host}")
+            if not _domain:
+                raise TypeError(f"No subdomains found for {host}")
             _subdomains = host[:_domain.start()] + host[_domain.end():]
             if not _subdomains:
                 raise TypeError(f"No subdomains found for {host}")
