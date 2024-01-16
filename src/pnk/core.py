@@ -23,7 +23,10 @@ class Formula:
         host = url.hostname or url.geturl()
         log.debug(f"{host=}")
         if host:
-            _domain = re.search(r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io)$", host)
+            _domain = re.search(
+                r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$",
+                host,
+            )
             log.debug(f"No domain found for {host}")
             if not _domain:
                 raise TypeError(f"No subdomains found for {host}")
