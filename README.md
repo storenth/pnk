@@ -58,7 +58,7 @@ See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) 
 - [ ] replace each subs with word in wordlist: v2.test.domain.com -> demo.test.domain.com
 - [ ] prepend/append word by creating new subs: test.domain.com -> demo.test.domain.com, test.demo.domain.com
 ### Limitations
-Unexpectedly works with incremet option in the following cases: more then two digits:
+Does't handle incremet option in the following cases: more then two digits:
 ```
 v123.tesla.com -> v123.tesla.com
 aws.777v.amazon.com -> aws.777v.amazon.com
