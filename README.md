@@ -71,7 +71,7 @@ See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) 
 Does't handle incremet option in the following cases: more then two digits:
 ```
 v123.tesla.com -> v123.tesla.com
-aws.777v.amazon.com -> aws.777v.amazon.com
+aws.1002030v.amazon.com -> aws.1002030v.amazon.com
 ```
 ## TODO
 1. Combinations of incrementations (cartesian product): 
