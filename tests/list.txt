@@ -9,7 +9,6 @@ https://www.aws1.drop.com/
 www.1do.do.co
 rus.777.vat.co.uk
 e2e.vv2v.verizon.com
-s13.m5.r71.mail.ru
 777v.host.ai
 99v.host-us.ai
 s1-2.9s.amazon.com
@@ -18,3 +17,5 @@ s1-2.9s.amazon.com
 11up33.google.com
 v00up00.google.com
 s5-5.do4s.razer.com
+1a-1b1c.tutu.org.ru
+aws3-3m1.tesla.com
