@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pnk"
-version = "0.0.9"
+version = "0.0.1"
 authors = [
   { name="Zhdanov Kirill", email="storenth@yandex.ru" },
 ]
@@ -16,6 +16,8 @@ keywords = [
 "itertool",
 "subdomains",
 "bugbounty",
+"subdomain-enumeration",
+"infosec",
 ]
 readme = "README.md"
 requires-python = ">=3.8"
