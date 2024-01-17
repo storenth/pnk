@@ -49,13 +49,14 @@ class Formula:
 
     def incrmt(self, subdomain):
         """Increment a digit found in subdomain"""
-        log.debug("Increment digits...")
+        log.debug(f"Increment digits on {subdomain=}")
         pattern = re.compile('(?<!\d)\d{1,2}(?!\d)')
         matches = pattern.finditer(subdomain)
         for match in matches:
             log.debug(match)
             if match:
-                for i in range(10 if len(match.group()) < 2 else 100):
+                range_count = 10 if len(match.group()) < 2 else 100
+                for i in range(range_count):
                     _s = (
                         subdomain[:match.start()]
                         + str(i).zfill(len(subdomain[match.start(): match.end()]))
@@ -64,16 +65,17 @@ class Formula:
                     log.debug(_s)
                     yield _s
                 # check for duplicated digits to increment it both
-                if match.group() in subdomain[:match.start()]:
+                if match.group() in subdomain[:match.start()] and match.group() not in subdomain[match.end():]:
                     log.debug("duplicated digits")
                     log.debug(match)
-                    for i in range(10 if len(match.group()) < 2 else 100):
-                        _s = subdomain.replace(
+
+                    for i in range(range_count):
+                        _sd = subdomain.replace(
                             subdomain[match.start(): match.end()],
                             str(i).zfill(len(subdomain[match.start(): match.end()])),
                         )
-                        log.debug(_s)
-                        yield _s
+                        log.debug(_sd)
+                        yield _sd
 
     def run(self):
         """Compose functions on files with hostname lines"""
