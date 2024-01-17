@@ -6,16 +6,15 @@ sub.test.ru
 test.ru
 
 https://www.aws1.drop.com/
-www.1do.do.co
+www.1do.razer.com
 rus.777.vat.co.uk
 e2e.vv2v.verizon.com
 777v.host.ai
 99v.host-us.ai
 s1-2.9s.amazon.com
-7io7.33.ya.ru
-2io4.2.do.com
 11up33.google.com
 v00up00.google.com
 s5-5.do4s.razer.com
 1a-1b1c.tutu.org.ru
 aws3-3m1.tesla.com
+7io7.v2.33.ya.ru

@@ -52,6 +52,16 @@ aws9-9.s11.env2.tesla.com
 ...
 ```
 
+## Install & Usage
+PyPi:
+```bash
+pip3 install --no-deps pnk
+```
+From the source code:
+```bash
+$ cat subs1.txt subs2.txt | ./src/pnk/__main__.py
+```
+
 # Constraints
 ### Feature request
 See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) for the following feature requests:
@@ -67,14 +77,4 @@ aws.777v.amazon.com -> aws.777v.amazon.com
 1. Combinations of incrementations (cartesian product): 
 ```
 5io5.33.ya.ru -> 0io0.00.ya.ru .. 9io9.99.ya.ru
-```
-2. Package
-
-PyPi-test ready
-![test.pypi](misc/test-pypi.png)
-
-## Usage
-From the source code:
-```bash
-$ cat subs1.txt subs2.txt | ./src/pnk/__main__.py
 ```
