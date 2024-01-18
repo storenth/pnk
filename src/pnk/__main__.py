@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
-import sys
 import argparse
 import os
+import sys
 
 # need to import pnk in case of testing
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from pnk import __version__
 from pnk.core import Formula
 
 
@@ -24,6 +25,7 @@ def setup_argparse():
         metavar='FILE',
         help='list of subdomains/hosts to process',
     )
+    parser.add_argument('-v', '--version', action='version', version=__version__)
     args = parser.parse_args()
     if not args.file:
         parser.print_help(sys.stderr)

@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-import itertools
 import functools
+import itertools
 import pathlib
 import re
-
 from urllib.parse import urlparse
+
 from pnk.helpers import logger
 
 log = logger.get_logger()
