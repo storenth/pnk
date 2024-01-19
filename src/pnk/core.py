@@ -20,6 +20,7 @@ class Formula:
     def parse_hostname(self, hostname):
         """Extract a domain and subdomains from the input"""
         url = urlparse(hostname)
+        log.debug(f"{url=}")
         host = url.hostname or url.geturl()
         log.debug(f"{host=}")
         if host:
@@ -27,9 +28,9 @@ class Formula:
                 r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$",
                 host,
             )
-            log.debug(f"No domain found for {host}")
+            log.debug(f"{_domain=}")
             if not _domain:
-                raise TypeError(f"No subdomains found for {host}")
+                raise TypeError(f"No domain found for {host}")
             _subdomains = host[:_domain.start()] + host[_domain.end():]
             if not _subdomains:
                 raise TypeError(f"No subdomains found for {host}")
