@@ -55,24 +55,25 @@ class Formula:
         for match in matches:
             log.debug(match)
             if match:
+                m_start = match.start()
+                m_end = match.end()
                 range_count = 10 if len(match.group()) < 2 else 100
                 for i in range(range_count):
                     _s = (
-                        subdomain[:match.start()]
-                        + str(i).zfill(len(subdomain[match.start(): match.end()]))
-                        + subdomain[match.end():]
+                        subdomain[:m_start]
+                        + str(i).zfill(len(subdomain[m_start: m_end]))
+                        + subdomain[m_end:]
                     )
                     log.debug(_s)
                     yield _s
                 # check for duplicated digits to increment it both
-                if match.group() in subdomain[:match.start()] and match.group() not in subdomain[match.end():]:
+                if match.group() in subdomain[:m_start] and match.group() not in subdomain[m_end:]:
                     log.debug("duplicated digits")
                     log.debug(match)
-
                     for i in range(range_count):
                         _sd = subdomain.replace(
-                            subdomain[match.start(): match.end()],
-                            str(i).zfill(len(subdomain[match.start(): match.end()])),
+                            subdomain[m_start: m_end],
+                            str(i).zfill(len(subdomain[m_start: m_end])),
                         )
                         log.debug(_sd)
                         yield _sd
