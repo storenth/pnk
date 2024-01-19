@@ -68,10 +68,14 @@ See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) 
 - [ ] replace each subs with word in wordlist: v2.test.domain.com -> demo.test.domain.com
 - [ ] prepend/append word by creating new subs: test.domain.com -> demo.test.domain.com, test.demo.domain.com
 ### Limitations
-Does't handle incremet option in the following cases: more then two digits:
+1. Does't handle incremet option in the following cases: more then two digits:
 ```
 v123.tesla.com -> v123.tesla.com
 aws.1002030v.amazon.com -> aws.1002030v.amazon.com
+```
+2. Does not ships with DNS resolver, use [massdns](https://github.com/blechschmidt/massdns)
+```bash
+$ pnk < list.txt | massdns
 ```
 ## TODO
 1. Combinations of incrementations (cartesian product): 
