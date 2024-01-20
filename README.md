@@ -3,7 +3,7 @@ Produce a combination of subdomains - generates permutations P(n,k).
 
 ## Make it work
 - [x] swap subs themselves: web.test.domain.com -> test.web.domain.com
-- [x] increase/decrease subs with numbers: test1.domain.com -> test2.domain.com
+- [x] increase/decrease digits on subs with numbers: test1.domain.com -> test2.domain.com
 
 ## Make it right
 1. `stdin`: reads standard input. This is useful for capturing a pipeline’s contents at an intermediate stage of processing.
@@ -77,6 +77,7 @@ aws.1002030v.amazon.com -> aws.1002030v.amazon.com
 ```bash
 $ pnk < list.txt | massdns
 ```
+3. Possible out of memory issues when redirecting `stdout` to a file, please read the [Wiki](https://github.com/storenth/pnk/wiki)
 ## TODO
 1. Combinations of incrementations (cartesian product): 
 ```
