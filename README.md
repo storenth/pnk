@@ -77,7 +77,7 @@ aws.1002030v.amazon.com -> aws.1002030v.amazon.com
 ```
 2. Does not ships with DNS resolver, use [massdns](https://github.com/blechschmidt/massdns)
 ```bash
-$ pnk < list.txt | massdns
+$ pnk < list.txt | massdns -
 ```
 3. Possible out of memory issues when redirecting `stdout` to a file, please read the [Wiki](https://github.com/storenth/pnk/wiki)
 ## TODO
