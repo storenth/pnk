@@ -13,9 +13,11 @@ from pnk.core import Formula
 def setup_argparse():
     """Read arguments from cli"""
     parser = argparse.ArgumentParser(
-        description="Set CLI args pnk works with")
+        description="Generates a new subdomains on provided input")
     # optional argument
-    parser.add_argument('-i', '--increment', action='store_true', help='additionally increment any one or two digits on subdomains')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-i', '--increment', action='store_true', help='increment any one or two digits on subdomains')
+    group.add_argument('-c', '--cartesian', action='store_true', help='increment digits on subdomains creating Cartesian product')
     # positional argument
     parser.add_argument(
         'file',

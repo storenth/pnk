@@ -19,9 +19,9 @@ from pnk import core
 
 class Permutation(unittest.TestCase):
     def setUp(self):
-        TestData = namedtuple('TestData', ['increment', 'wordlist'])
+        TestData = namedtuple('TestData', ['increment', 'cartesian', 'wordlist'])
         # no --increment or --wordlist option given
-        self.args = TestData("", "")
+        self.args = TestData("", "", "")
         self.original_stdout, sys.stdout = sys.stdout, StringIO()
 
     def test_two_permutation(self):

@@ -4,7 +4,6 @@ import itertools
 import pathlib
 import re
 from urllib.parse import urlparse
-
 from pnk.helpers import logger
 
 log = logger.get_logger()
@@ -52,8 +51,9 @@ class Formula:
         """Increment a digit found in subdomain"""
         log.debug(f"Increment digits on {subdomain=}")
         pattern = re.compile('(?<!\d)\d{1,2}(?!\d)')
-        matches = pattern.finditer(subdomain)
-        for match in matches:
+        counter = 0
+        for match in pattern.finditer(subdomain):
+            counter = counter + 1
             log.debug(match)
             if match:
                 m_start = match.start()
@@ -78,6 +78,9 @@ class Formula:
                         )
                         log.debug(_sd)
                         yield _sd
+        if counter == 0:
+            log.debug("No digits found!")
+            yield subdomain
 
     def run(self):
         """Compose functions on files with hostname lines"""
@@ -96,6 +99,9 @@ class Formula:
                                 _s[index] = i
                                 print(".".join(_s) + "." + d)
                             _s[index] = j
+                    if self.args.cartesian:
+                        for p in itertools.product(*map(self.incrmt, s)):
+                            print(".".join(p) + "." + d)
                     for p in self.pnk(s):
                         print(".".join(p) + "." + d)
 
