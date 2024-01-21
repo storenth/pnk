@@ -1,5 +1,5 @@
 # pnk
-Produce a combination of subdomains - generates permutations P(n,k).
+Produce a new combination of subdomains - generates permutations P(n,k).
 
 ## Make it work
 - [x] swap subs themselves: web.test.domain.com -> test.web.domain.com
@@ -10,16 +10,18 @@ Produce a combination of subdomains - generates permutations P(n,k).
 2. `stdout`: supports standard output.
 3. Works with the next arguments:
 ```
-usage: pnk.py [-h] [-i] [-w WORDLIST] [FILE ...]
+usage: pnk.py [-h] [-i | -c] [-v] [FILE ...]
 
-Set CLI args pnk works with
+Generates a new subdomains on provided input
 
 positional arguments:
-  FILE                  list of subdomains/hosts to process
+  FILE             list of subdomains/hosts to process
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -i, --increment       additionally increment digits on subdomains
+  -h, --help       show this help message and exit
+  -i, --increment  increment any one or two digits on subdomains
+  -c, --cartesian  increment digits on subdomains creating Cartesian product
+  -v, --version    show program's version number and exit
 ```
 ```bash
 $ cat subs1.txt subs2.txt | pnk
@@ -79,7 +81,11 @@ $ pnk < list.txt | massdns
 ```
 3. Possible out of memory issues when redirecting `stdout` to a file, please read the [Wiki](https://github.com/storenth/pnk/wiki)
 ## TODO
-1. Combinations of incrementations (cartesian product): 
+1. Combinations of incrementations (cartesian product of all digits found in each sub): 
 ```
 5io5.33.ya.ru -> 0io0.00.ya.ru .. 9io9.99.ya.ru
+```
+How it works now:
+```
+5io5.33.ya.ru -> 0io5.00.ya.ru .. 9io5.99.ya.ru .. 5io0.00.ya.ru .. 5io9.99.ya.ru
 ```
