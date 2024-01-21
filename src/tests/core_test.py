@@ -35,5 +35,38 @@ class Permutation(unittest.TestCase):
     def tearDown(self):
         sys.stdout = self.original_stdout
 
+
+class Incrementation(unittest.TestCase):
+    def setUp(self):
+        TestData = namedtuple('TestData', ['increment', 'cartesian', 'wordlist'])
+        # --increment option enabled
+        self.args = TestData("i", "", "")
+        self.original_stdout, sys.stdout = sys.stdout, StringIO()
+
+    def test_one_sub_increment(self):
+        with open(pathlib.Path(__file__).parent / 'test_one_sub_increment.txt', 'r', encoding='UTF-8') as file:
+            core.Formula(self.args, [file]).run()
+        self.assertEqual(
+            sys.stdout.getvalue().split(),
+            [
+                "dev.1a.tesla.com",
+                'dev.0a.tesla.com',
+                'dev.1a.tesla.com',
+                'dev.2a.tesla.com',
+                'dev.3a.tesla.com',
+                'dev.4a.tesla.com',
+                'dev.5a.tesla.com',
+                'dev.6a.tesla.com',
+                'dev.7a.tesla.com',
+                'dev.8a.tesla.com',
+                'dev.9a.tesla.com',
+                'dev.1a.tesla.com',
+                '1a.dev.tesla.com'
+            ]
+        )
+
+    def tearDown(self):
+        sys.stdout = self.original_stdout
+
 if __name__ == '__main__':
     unittest.main()
