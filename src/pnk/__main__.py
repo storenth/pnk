@@ -17,7 +17,7 @@ def setup_argparse():
     # optional argument
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-i', '--increment', action='store_true', help='increment any one or two digits on subdomains')
-    group.add_argument('-c', '--cartesian', action='store_true', help='increment digits on subdomains creating Cartesian product')
+    group.add_argument('-c', '--cartesian', action='store_true', help='increment digits on subdomains creating their Cartesian product')
     # positional argument
     parser.add_argument(
         'file',

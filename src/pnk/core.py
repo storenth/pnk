@@ -3,7 +3,9 @@ import functools
 import itertools
 import pathlib
 import re
+from collections import deque
 from urllib.parse import urlparse
+
 from pnk.helpers import logger
 
 log = logger.get_logger()
@@ -82,6 +84,14 @@ class Formula:
             log.debug("No digits found!")
             yield subdomain
 
+    def join_product_tuples(self, tuples):
+        _len = len(tuples)
+        log.debug(_len)
+        log.debug(tuples)
+        if _len == 1:
+            return "".join(*tuples)
+        return "".join(tuples[0]) + "." + self.join_product_tuples(tuples[1:])
+
     def run(self):
         """Compose functions on files with hostname lines"""
         for lines in self.file:
@@ -100,8 +110,35 @@ class Formula:
                                 print(".".join(_s) + "." + d)
                             _s[index] = j
                     if self.args.cartesian:
-                        for p in itertools.product(*map(self.incrmt, s)):
-                            print(".".join(p) + "." + d)
+                        _deque = deque()
+                        subs_list = []
+                        pattern = re.compile('((?<!\d)\d{1,2}(?!\d))')
+                        for index, _s in enumerate(s):
+                            log.debug(_s)
+                            _list = pattern.split(_s)
+                            if len(_list) == 1:
+                                log.debug(_list)
+                                _deque.append(_list)
+                            else:
+                                for x in _list:
+                                    try:
+                                        if type(int(x)) == int:
+                                            _deque.append([str(i).zfill(len(x)) for i in range(10 if len(x) < 2 else 100)])
+                                    except ValueError:
+                                        # filter out empty str
+                                        if x != "":
+                                            _deque.append([x])
+
+                            subs_list.append(itertools.product(*_deque))
+                            log.debug(_deque)
+                            log.debug(subs_list)
+                            _deque.clear()
+
+                        for p in itertools.product(*subs_list):
+                            log.debug(p)
+                            log.debug(self.join_product_tuples(p))
+                            print(self.join_product_tuples(p) + "." + d)
+
                     for p in self.pnk(s):
                         print(".".join(p) + "." + d)
 
