@@ -26,7 +26,7 @@ class Formula:
         log.debug(f"{host=}")
         if host:
             _domain = re.search(
-                r"[\w-]+[.](com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$",
+                r"[\w-]+[.](рф|com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$",
                 host,
             )
             log.debug(f"{_domain=}")
@@ -110,10 +110,10 @@ class Formula:
                                 print(".".join(_s) + "." + d)
                             _s[index] = j
                     if self.args.cartesian:
-                        _deque = deque()
+                        _deque = []
                         subs_list = []
                         pattern = re.compile('((?<!\d)\d{1,2}(?!\d))')
-                        for index, _s in enumerate(s):
+                        for _s in s:
                             log.debug(_s)
                             _list = pattern.split(_s)
                             if len(_list) == 1:
@@ -122,8 +122,12 @@ class Formula:
                             else:
                                 for x in _list:
                                     try:
-                                        if type(int(x)) == int:
-                                            _deque.append([str(i).zfill(len(x)) for i in range(10 if len(x) < 2 else 100)])
+                                        if int(x) or x in ("0", "00"):
+                                            x_lenght = len(x)
+                                            if x_lenght <= 2:
+                                                _deque.append([str(i).zfill(x_lenght) for i in range(10 if x_lenght == 1 else 100)])
+                                            else:
+                                                _deque.append([x])
                                     except ValueError:
                                         # filter out empty str
                                         if x != "":
@@ -136,7 +140,6 @@ class Formula:
 
                         for p in itertools.product(*subs_list):
                             log.debug(p)
-                            log.debug(self.join_product_tuples(p))
                             print(self.join_product_tuples(p) + "." + d)
 
                     for p in self.pnk(s):
@@ -144,7 +147,7 @@ class Formula:
 
     def produce_wordlist(self):
         """TODO: see https://github.com/storenth/pnk/issues/1
-        Read the wordlist and returns lines generator
+        Read the wordlist and return lines generator
         """
         wordlist = self.args.wordlist if self.args.wordlist else pathlib.Path(__file__).parent / 'wordlist.txt'
         with open(wordlist, 'r', encoding='UTF-8') as file:
