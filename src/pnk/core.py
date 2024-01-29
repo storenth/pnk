@@ -3,7 +3,6 @@ import functools
 import itertools
 import pathlib
 import re
-from collections import deque
 from urllib.parse import urlparse
 
 from pnk.helpers import logger
