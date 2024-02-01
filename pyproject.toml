@@ -36,3 +36,7 @@ Issues = "https://github.com/storenth/pnk/issues"
 
 [project.scripts]
 pnk = "pnk.__main__:main"
+
+[tool.ruff]
+extend-exclude = ["src/tests", "src/pnk/__main__.py"]
+ignore = ["E402"]
