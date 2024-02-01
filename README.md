@@ -79,7 +79,7 @@ $ cat subs1.txt subs2.txt | ./src/pnk/__main__.py
 
 # Constraints
 ### Limitations
-1. Does't handle incremet option in the following cases: more then two digits:
+1. Does't handle increment option in the following cases: more then two digits:
 ```
 v123.tesla.com -> v123.tesla.com
 aws.1002030v.amazon.com -> aws.1002030v.amazon.com
@@ -92,5 +92,5 @@ $ pnk < list.txt | massdns -
 
 ### Feature request
 See the open [issue](https://github.com/storenth/pnk/issues/1#issue-2080221058) for the following feature requests:
-- [ ] replace each subs with word in wordlist: v2.test.domain.com -> demo.test.domain.com
+- [ ] replace keywords with word in wordlist: v2.test.domain.com -> v2.stage.domain.com .. v2.prod.domain.com
 - [ ] prepend/append word by creating new subs: test.domain.com -> demo.test.domain.com, test.demo.domain.com
