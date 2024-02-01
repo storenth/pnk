@@ -17,11 +17,12 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from pnk import core
 
 
+TestData = namedtuple('TestData', ['increment', 'cartesian', 'data', 'wordlist'])
+
 class Permutation(unittest.TestCase):
     def setUp(self):
-        TestData = namedtuple('TestData', ['increment', 'cartesian', 'wordlist'])
         # no --increment or --wordlist option given
-        self.args = TestData("", "", "")
+        self.args = TestData("", "", "", "")
         self.original_stdout, sys.stdout = sys.stdout, StringIO()
 
     def test_two_permutation(self):
@@ -38,9 +39,8 @@ class Permutation(unittest.TestCase):
 
 class Incrementation(unittest.TestCase):
     def setUp(self):
-        TestData = namedtuple('TestData', ['increment', 'cartesian', 'wordlist'])
         # --increment option enabled
-        self.args = TestData("i", "", "")
+        self.args = TestData("i", "", "", "")
         self.original_stdout, sys.stdout = sys.stdout, StringIO()
 
     def test_one_sub_increment(self):
