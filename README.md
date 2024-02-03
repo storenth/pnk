@@ -10,7 +10,7 @@ Produce a new combination of subdomains - generates permutations P(n,k).
 2. `stdout`: supports standard output.
 3. Works with the next arguments:
 ```
-usage: pnk [-h] [-i | -c] [-v] [FILE ...]
+usage: pnk [-h] [-i | -c] [-d] [-v] [FILE ...]
 
 Generates a new subdomains on provided input
 
@@ -21,6 +21,7 @@ optional arguments:
   -h, --help       show this help message and exit
   -i, --increment  increment any one or two digits on subdomains
   -c, --cartesian  increment digits on subdomains creating their Cartesian product
+  -d, --data       generate test data from the stdin
   -v, --version    show program's version number and exit
 ```
 ```bash
