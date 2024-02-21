@@ -30,7 +30,12 @@ class Permutation(unittest.TestCase):
             core.Formula(self.args, [file]).run()
         self.assertEqual(
             sys.stdout.getvalue(),
-            "1a-2b3c.4tutu.google.com\n4tutu.1a-2b3c.google.com\n",
+            (
+                "1a-2b3c.4tutu.google.com\n"
+                "1a_2b3c.4tutu.google.com\n"
+                "1a.2b3c.4tutu.google.com\n"
+                "4tutu.1a-2b3c.google.com\n"
+            ),
         )
 
     def tearDown(self):

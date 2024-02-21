@@ -32,6 +32,11 @@ def setup_argparse():
     parser.add_argument(
         "-d", "--data", action="store_true", help="generate test data from the stdin"
     )
+    parser.add_argument(
+        "-r", "--replace",
+        action="store_true",
+        help="replace underscores and dashes with dots",
+    )
     # positional argument
     parser.add_argument(
         "file",
