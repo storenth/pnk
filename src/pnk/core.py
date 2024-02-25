@@ -178,7 +178,7 @@ class Formula:
             return [items]
         _list = []
         _list.append([items[0]])
-        _list.append(["_", "."])
+        _list.append(["-", "_", "."])
         _list.extend(self.add_template(items[1:]))
         return _list
 
@@ -197,8 +197,9 @@ class Formula:
                             else self.parse_hostname(line.strip())
                         )
                     )
-                except TypeError:
-                    pass  # ignore not hostname and lack of subdomains cases
+                except TypeError as err:
+                    # ignore not hostname and lack of subdomains cases
+                    log.debug(f"{err=}")
                 else:
                     if self.args.increment:
                         _s = s.copy()
