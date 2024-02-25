@@ -17,15 +17,21 @@ class Formula:
         self.file = file
         self.wordlist = wordlist
 
-    def parse_hostname(self, hostname):
+    def parse_hostname(self, hostname, target=None):
         """Extract a domain and subdomains from the input"""
+        log.debug(f"{target=}")
         url = urlparse(hostname)
         log.debug(f"{url=}")
         host = url.hostname or url.geturl()
         log.debug(f"{host=}")
         if host:
+            pattern = (
+                rf"{target}$"
+                if target
+                else r"[\w-]+[.](рф|com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$"
+            )
             _domain = re.search(
-                r"[\w-]+[.](рф|com|co.uk|ru|org|co|in|ai|sh|io|jp|com.cn|cn|cz|de|net|fr|it|au|ca|ir|br|com.br|co.kr|gov|uk|kz|tech|shop|moscow|store|me)$",
+                pattern,
                 host,
             )
             log.debug(f"{_domain=}")
@@ -45,7 +51,7 @@ class Formula:
     def pnk(self, subdomains):
         """Sequence of permutations on subdomains"""
         log.debug("Permutation...")
-        counter = 0 if self.args.replace else 1
+        counter = 0 if self.args.replace or self.args.cartesian else 1
         for p in itertools.permutations(subdomains):
             if counter > 0:
                 yield p
@@ -139,7 +145,11 @@ class Formula:
                     h, d, s = (
                         (None, None, line.strip().split("."))
                         if self.args.data
-                        else self.parse_hostname(line.strip())
+                        else (
+                            self.parse_hostname(line.strip(), self.args.target)
+                            if self.args.target
+                            else self.parse_hostname(line.strip())
+                        )
                     )
                 except TypeError:
                     pass  # ignore not hostname and lack of subdomains cases

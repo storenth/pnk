@@ -37,6 +37,13 @@ def setup_argparse():
         action="store_true",
         help="replace underscores and dashes with dots",
     )
+    parser.add_argument(
+        "-t",
+        "--target",
+        type=str,
+        default="",
+        help="target domain to find subs for (which will not be processed)",
+    )
     # positional argument
     parser.add_argument(
         "file",
