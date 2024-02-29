@@ -32,6 +32,24 @@ def setup_argparse():
     parser.add_argument(
         "-d", "--data", action="store_true", help="generate test data from the stdin"
     )
+    parser.add_argument(
+        "-r", "--replace",
+        action="store_true",
+        help="replace underscores and dashes with dots",
+    )
+    parser.add_argument(
+        "-t",
+        "--target",
+        type=str,
+        default="",
+        help="target domain to find subs for (which will not be processed)",
+    )
+    parser.add_argument(
+        "-w",
+        "--wordlist",
+        type=argparse.FileType('r', encoding='UTF-8'),
+        help="mixed subdomains with wordlist",
+    )
     # positional argument
     parser.add_argument(
         "file",
