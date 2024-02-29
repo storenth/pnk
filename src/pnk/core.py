@@ -160,17 +160,18 @@ class Formula:
         else:
             return ()
 
-    def join_product_tuples(self, tuples):
+    def join_product_tuples(self, tuples, delimeter=None):
         """Convert a list of tuples into a string
         input: (('1', '_', 'n', '-', '0', '_', 'test1'), ('s2', '-', 'v'))
         output: 1_n-0_test.s2-v
         """
+        dlmtr = delimeter if delimeter else "."
         _len = len(tuples)
         log.debug(_len)
         log.debug(tuples)
         if _len == 1:
             return "".join(*tuples)
-        return "".join(tuples[0]) + "." + self.join_product_tuples(tuples[1:])
+        return "".join(tuples[0]) + dlmtr + self.join_product_tuples(tuples[1:])
 
     def add_template(self, items):
         log.debug(items)
@@ -181,6 +182,19 @@ class Formula:
         _list.append(["-", "_", "."])
         _list.extend(self.add_template(items[1:]))
         return _list
+
+    def produce_wordlist(self, subdomains):
+        """TODO: see https://github.com/storenth/pnk/issues/1
+        Read the wordlist and return lines generator
+        """
+        wordlist = (
+            self.args.wordlist
+            if self.args.wordlist
+            else pathlib.Path(__file__).parent / "wordlist.txt"
+        )
+        for word in wordlist:
+            log.debug(f"{word.strip()=}")
+            yield self.pnk([word.strip(), *subdomains])
 
     def run(self):
         """Compose functions on files with hostname lines"""
@@ -223,21 +237,25 @@ class Formula:
                                 ".".join(filter(None, [self.join_product_tuples(x), d]))
                             )
 
+                    if self.args.wordlist:
+                        for word_subs_permutations in self.produce_wordlist(s):
+                            for p in word_subs_permutations:
+                                log.debug(p)
+                                print(
+                                    ".".join(
+                                        filter(None, [self.join_product_tuples(p), d])
+                                    )
+                                )
+                                print(
+                                    ".".join(
+                                        filter(
+                                            None, [self.join_product_tuples(p, "-"), d]
+                                        )
+                                    )
+                                )
+
                     # region operations by default
                     for p in self.pnk(s):
                         log.debug(p)
                         print(".".join(filter(None, [".".join(p), d])))
                     # endregion
-
-    def produce_wordlist(self):
-        """TODO: see https://github.com/storenth/pnk/issues/1
-        Read the wordlist and return lines generator
-        """
-        wordlist = (
-            self.args.wordlist
-            if self.args.wordlist
-            else pathlib.Path(__file__).parent / "wordlist.txt"
-        )
-        with open(wordlist, "r", encoding="UTF-8") as file:
-            for line in file:
-                yield line.strip()
