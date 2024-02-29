@@ -10,19 +10,24 @@ Produce a new combination of subdomains - generates permutations P(n,k).
 2. `stdout`: supports standard output.
 3. Works with the next arguments:
 ```
-usage: pnk [-h] [-i | -c] [-d] [-v] [FILE ...]
+usage: pnk [-h] [-i | -c] [-d] [-r] [-t TARGET] [-w WORDLIST] [-v] [FILE ...]
 
 Generates a new subdomains on provided input
 
 positional arguments:
-  FILE             list of subdomains/hosts to process
+  FILE                  list of subdomains/hosts to process
 
 optional arguments:
-  -h, --help       show this help message and exit
-  -i, --increment  increment any one or two digits on subdomains
-  -c, --cartesian  increment digits on subdomains creating their Cartesian product
-  -d, --data       generate test data from the stdin
-  -v, --version    show program's version number and exit
+  -h, --help            show this help message and exit
+  -i, --increment       increment any one or two digits on subdomains
+  -c, --cartesian       increment digits on subdomains creating their Cartesian product
+  -d, --data            generate test data from the stdin
+  -r, --replace         replace underscores and dashes with dots
+  -t TARGET, --target TARGET
+                        target domain to find subs for (which will not be processed)
+  -w WORDLIST, --wordlist WORDLIST
+                        mixed subdomains with wordlist
+  -v, --version         show program's version number and exit
 ```
 ```bash
 $ cat subs1.txt subs2.txt | pnk
