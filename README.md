@@ -34,7 +34,8 @@ $ cat subs1.txt subs2.txt | pnk
 ```
 
 ## Make it fast
-To turn this single process script into multiprocess use [interlace](https://github.com/codingo/Interlace)
+- threading: [issue/5](https://github.com/storenth/pnk/issues/5)
+- multiprocessing: to turn this single I/O bound process script into multiprocess use [interlace](https://github.com/codingo/Interlace).
 
 
 # Features
