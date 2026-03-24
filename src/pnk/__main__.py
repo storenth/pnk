@@ -10,6 +10,16 @@ from pnk import __version__
 from pnk.core import Formula
 
 
+def validate_jobs(value):
+    """Validate the number of jobs against available CPU cores"""
+    max_jobs = os.cpu_count() or 1
+    ivalue = int(value)
+    if ivalue > max_jobs:
+        raise argparse.ArgumentTypeError(
+            f"{ivalue} is too many jobs. Maximum available CPU cores: {max_jobs}"
+        )
+    return ivalue
+
 def setup_argparse():
     """Read arguments from cli"""
     parser = argparse.ArgumentParser(
@@ -49,6 +59,13 @@ def setup_argparse():
         "--wordlist",
         type=argparse.FileType('r', encoding='UTF-8'),
         help="mixed subdomains with wordlist",
+    )
+    parser.add_argument(
+        "-j",
+        "--jobs",
+        type=validate_jobs,
+        default=1,
+        help=f"number of parallel processes to use (default: 1, max: {os.cpu_count() or 1})",
     )
     # positional argument
     parser.add_argument(
