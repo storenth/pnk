@@ -5,15 +5,15 @@ Run:
     python3 -m unittest src/tests/core_test.py -vb
 """
 
-import os
-import pathlib
 import sys
+import pathlib
 import unittest
 from collections import namedtuple
 from io import StringIO
 
 # need to import pnk in case of testing
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# import os
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pnk import core
 
 
